@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AC Service App</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #f2f2f2; margin: 0; padding: 20px; }
+    h1 { color: #007bff; }
+    .card { background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: inline-block; width: 90%; max-width: 400px; }
+    input, select, button { padding: 10px; margin-top: 10px; width: 100%; border-radius: 8px; border: 1px solid #ccc; }
+    button { background: #25D366; color: white; border: none; font-size: 16px; }
+    button:hover { background: #20b856; }
+  </style>
+</head>
+<body>
+  <h1>AC Service App</h1>
+  <div class="card">
+    <h3>Book Your Service</h3>
+
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="text" id="address" placeholder="Your Address" required>
+    <input type="text" id="phone" placeholder="Your Phone Number" required>
+
+    <label>Select Product:</label>
+    <select id="product">
+      <option value="AC">AC</option>
+      <option value="Fridge">Fridge</option>
+      <option value="Washing Machine">Washing Machine</option>
+    </select>
+
+    <label>Select Problem:</label>
+    <select id="problem">
+      <option value="Not Cooling">Not Cooling</option>
+      <option value="Noise Issue">Noise Issue</option>
+      <option value="Water Leakage">Water Leakage</option>
+      <option value="Not Turning On">Not Turning On</option>
+    </select>
+
+    <button onclick="sendWhatsApp()">📱 Chat on WhatsApp</button>
+  </div>
+
+  <script>
+    function sendWhatsApp() {
+      let name = document.getElementById('name').value;
+      let address = document.getElementById('address').value;
+      let phone = document.getElementById('phone').value;
+      let product = document.getElementById('product').value;
+      let problem = document.getElementById('problem').value;
+      
+      let message = `Hi, my name is ${name}. I have an issue with my ${product} — ${problem}. Please contact me at ${phone}. My address is: ${address}.`;
+      let url = `https://wa.me/916394620064?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
