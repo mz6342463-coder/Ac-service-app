@@ -1,12 +1,12 @@
-
 {
   "name": "Zaibish Cooling Centre",
   "short_name": "Zaibish",
   "description": "Book AC, refrigerator, and washing machine services easily at Zaibish Cooling Centre.",
-  "start_url": "index.html",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#e0f7fa",
-  "theme_color": "#007bff",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "icon-192.png",
