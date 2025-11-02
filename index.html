@@ -1,57 +1,140 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AC Service App</title>
+  <title>Zaibish Cooling Centre</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #f2f2f2; margin: 0; padding: 20px; }
-    h1 { color: #007bff; }
-    .card { background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: inline-block; width: 90%; max-width: 400px; }
-    input, select, button { padding: 10px; margin-top: 10px; width: 100%; border-radius: 8px; border: 1px solid #ccc; }
-    button { background: #25D366; color: white; border: none; font-size: 16px; }
-    button:hover { background: #20b856; }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom right, #e3f2fd, #ffffff);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .card {
+      background: #fff;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      background: #25D366;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #20b856;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: #555;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
-  <h1>AC Service App</h1>
+
+  <header>Zaibish Cooling Centre</header>
+
   <div class="card">
     <h3>Book Your Service</h3>
 
     <input type="text" id="name" placeholder="Your Name" required>
     <input type="text" id="address" placeholder="Your Address" required>
-    <input type="text" id="phone" placeholder="Your Phone Number" required>
+    <input type="number" id="phone" placeholder="Phone Number" required>
 
-    <label>Select Product:</label>
-    <select id="product">
+    <select id="product" required onchange="updateProblems()">
+      <option value="">Select Product</option>
       <option value="AC">AC</option>
-      <option value="Fridge">Fridge</option>
+      <option value="Refrigerator">Refrigerator</option>
       <option value="Washing Machine">Washing Machine</option>
     </select>
 
-    <label>Select Problem:</label>
-    <select id="problem">
-      <option value="Not Cooling">Not Cooling</option>
-      <option value="Noise Issue">Noise Issue</option>
-      <option value="Water Leakage">Water Leakage</option>
-      <option value="Not Turning On">Not Turning On</option>
+    <select id="problem" required>
+      <option value="">Select Problem</option>
     </select>
 
-    <button onclick="sendWhatsApp()">📱 Chat on WhatsApp</button>
+    <button onclick="sendWhatsApp()">Book via WhatsApp</button>
+  </div>
+
+  <div class="footer">
+    📞 Contact: <strong>6394620064</strong>
   </div>
 
   <script>
+    const problems = {
+      "AC": ["Water Leakage", "Service Needed", "Not Cooling", "Outdoor Not Starting"],
+      "Refrigerator": ["Not Cooling", "Water Leakage", "Not Working", "Excessive Icing"],
+      "Washing Machine": ["Not Working", "Drain Problem", "Problem in Spin", "Problem in Wash", "Service Needed", "Water Not Filling"]
+    };
+
+    function updateProblems() {
+      const product = document.getElementById("product").value;
+      const problemSelect = document.getElementById("problem");
+      problemSelect.innerHTML = '<option value="">Select Problem</option>';
+      if (problems[product]) {
+        problems[product].forEach(problem => {
+          const opt = document.createElement("option");
+          opt.value = problem;
+          opt.textContent = problem;
+          problemSelect.appendChild(opt);
+        });
+      }
+    }
+
     function sendWhatsApp() {
-      let name = document.getElementById('name').value;
-      let address = document.getElementById('address').value;
-      let phone = document.getElementById('phone').value;
-      let product = document.getElementById('product').value;
-      let problem = document.getElementById('problem').value;
-      
-      let message = `Hi, my name is ${name}. I have an issue with my ${product} — ${problem}. Please contact me at ${phone}. My address is: ${address}.`;
-      let url = `https://wa.me/916394620064?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
+      const name = document.getElementById("name").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const product = document.getElementById("product").value;
+      const problem = document.getElementById("problem").value;
+
+      if (!name || !address || !phone || !product || !problem) {
+        alert("⚠️ Please fill in all details before submitting!");
+        return;
+      }
+
+      const message = `*Zaibish Cooling Centre Service Request*%0A
+Name: ${name}%0A
+Address: ${address}%0A
+Phone: ${phone}%0A
+Product: ${product}%0A
+Problem: ${problem}%0A
+%0APlease confirm my booking.`;
+
+      const url = `https://wa.me/916394620064?text=${message}`;
+      window.open(url, "_blank");
     }
   </script>
+
 </body>
 </html>
